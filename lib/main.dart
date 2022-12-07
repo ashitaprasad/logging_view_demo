@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' show debugPrintThrottled;
 import 'dart:developer' show log;
 import 'dart:convert';
 import 'constants.dart';
 import 'models.dart';
-
-final debugPrint = (String? message, {int? wrapWidth}) {
-  debugPrintThrottled(message, wrapWidth: wrapWidth ?? 70);
-};
 
 void main() {
   runApp(const MyApp());
@@ -48,58 +43,70 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: <Widget>[
             const SizedBox(height: 30),
-            const Text("Short String"),
-            buttonRow(kShortString, "String"),
+            const Text("Press Button to Log"),
             const SizedBox(height: 20),
-            const Text("Long String"),
-            buttonRow(kString, "String"),
+            ElevatedButton(
+              onPressed: () {
+                log(
+                  "Log Event: Short String",
+                  name: "buttonLog",
+                  error: kShortString,
+                );
+              },
+              child: const Text("Short String"),
+            ),
             const SizedBox(height: 20),
-            const Text("Large List"),
-            buttonRow(kList, "List"),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Colors.red,
+                ),
+              ),
+              onPressed: () {
+                log(
+                  "Log Event: Long String",
+                  name: "buttonLog",
+                  error: kString,
+                  level: 1000,
+                );
+              },
+              child: const Text("Long String (Severe Event)"),
+            ),
             const SizedBox(height: 20),
-            const Text("Deep Map"),
-            buttonRow(kMap, "Map"),
+            ElevatedButton(
+              onPressed: () {
+                log(
+                  "Log Event: Large List",
+                  name: "buttonLog",
+                  error: kList,
+                );
+              },
+              child: const Text("Large List"),
+            ),
             const SizedBox(height: 20),
-            const Text("Dart Class (Model Object)"),
-            buttonRow(jsonEncode(model), "Model"),
+            ElevatedButton(
+              onPressed: () {
+                log(
+                  "Log Event: Map",
+                  name: "buttonLog",
+                  error: kMap,
+                );
+              },
+              child: const Text("Map"),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                log(
+                  "Log Event: Dart Object (Custom Class)",
+                  name: "buttonLog",
+                  error: jsonEncode(model),
+                );
+              },
+              child: const Text("Dart Object (Custom Class)"),
+            ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget buttonRow(dynamic data, String message) {
-    return SizedBox(
-      width: 280,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              print(data);
-            },
-            child: const Text("print"),
-          ),
-          const Spacer(),
-          ElevatedButton(
-            onPressed: () {
-              debugPrint(data.toString());
-            },
-            child: const Text("debugPrint"),
-          ),
-          const Spacer(),
-          ElevatedButton(
-            onPressed: () {
-              log(
-                "Log Event $message",
-                name: "buttonRow.$message",
-                error: data,
-                level: 1000,
-              );
-            },
-            child: const Text("log"),
-          ),
-        ],
       ),
     );
   }

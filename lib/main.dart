@@ -15,9 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Logging View Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.indigo),
       home: const MyHomePage(),
     );
   }
@@ -36,9 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Logging View Demo"),
-      ),
+      appBar: AppBar(title: const Text("Logging View Demo")),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -58,9 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  Colors.red,
-                ),
+                backgroundColor: WidgetStatePropertyAll(Colors.red),
+                foregroundColor: WidgetStatePropertyAll(Colors.white),
               ),
               onPressed: () {
                 log(
@@ -75,22 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                log(
-                  "Log Event: Large List",
-                  name: "buttonLog",
-                  error: kList,
-                );
+                log("Log Event: Large List", name: "buttonLog", error: kList);
               },
               child: const Text("Large List"),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                log(
-                  "Log Event: Map",
-                  name: "buttonLog",
-                  error: kMap,
-                );
+                log("Log Event: Map", name: "buttonLog", error: kMap);
               },
               child: const Text("Map"),
             ),
